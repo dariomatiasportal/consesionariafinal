@@ -11,8 +11,7 @@
 
 </head>
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-fixed-top navbar-dark bg-dark static-top">
+    <div class="container-fluid">  
         <div class="row">
             <div class="col-md-12">
                 <div class="navbar navbar-inverse">
@@ -29,28 +28,28 @@
                             <img alt="Brand" src="assets/images/logos.png" class="d-inline-block align-top">
                         </div>
                         <div class="navbar-collapse collapse">
-                            <ul class="nav navbar-nav">                                              
-                                <li><a href="/autosol/gantt">Gantt</a></li>
-                                <li><a href="/autosol/importacion">Importar Tareas</a></li>
-                                <li><a href='<?php echo site_url('tarea/empleados_management')?>'>Empleados</a></li>
+                            <ul class="nav navbar-nav">  
+                                <li><a href='<?php echo site_url('/gantt')?>'>Gantt</a></li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown">Filtro<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href='<?php echo site_url('/ganttuno')?>'>Por Orden Alfabetico</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href='<?php echo site_url('/ganttdos')?>'>Por Mecanico</a></li>
+                                    </ul>
+                                </li>                                            
+                                <li><a href='<?php echo site_url('/importacion')?>'>Importar Tareas</a></li>
+                                <li><a href='<?php echo site_url('/empleados_management')?>'>Empleados</a></li>
                                 <li><a href='<?php echo site_url('tarea/tarealist')?>'>Lista de Tareas</a></li>
-                                <li><a href="./filtro">Filtrado de Tareas</a></li>
-                                
+                                <li><a href='<?php echo site_url('tarea/tareaterminada')?>'>Tareas Terminadas</a></li>
+                                <li><a href='<?php echo site_url('/filtro')?>'>Filtrado de Tareas</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </nav>
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <div class="container-fluid">  
         <div class="row">
-
             <div class="col-md-12">
                 <div class="container">
                     <h2>Importacion de Tareas</h2>
@@ -85,8 +84,6 @@
 
                     </div>
                 </div>
-
-
             </div>
         </div>
         <div class="row">

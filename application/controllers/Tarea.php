@@ -12,9 +12,13 @@ class Tarea extends CI_Controller {
         $this->load->library('grocery_CRUD');
     }
 
-    public function _example_output($output = null)
+    public function _example_output1($output1 = null)
     {
-        $this->load->view('tareaview.php',(array)$output);
+        $this->load->view('TareaView',(array)$output1);
+    }
+    public function _example_output2($output2 = null)
+    {
+        $this->load->view('TareaTerminadaView',(array)$output2);
     }
 
     public function offices()
@@ -34,9 +38,12 @@ class Tarea extends CI_Controller {
         try{
             $crud = new grocery_CRUD();
 
-            $crud->set_theme('flexigrid');
+            $crud->set_theme('datatables');
       
             //$crud->display_as('id','Mecanico')
+            $where = "estado='1' OR estado='2'";
+
+            $crud->where ($where);
 
             $crud->set_table('gantt_tasks');
                         
@@ -45,12 +52,16 @@ class Tarea extends CI_Controller {
             $crud->display_as('text','Descripcion')
                  ->display_as('orden','Numero de Orden')
                  //->display_as('asesor','Asesor de Servicio')
-                 ->display_as('start_date ','Comienzo')
+                 ->display_as('start_date','Comienzo')
                  ->display_as('progress','Descripcion')
                  ->display_as('duration','Duracion Horas')
                  ->display_as('text','Descripcion');
             
             $crud->set_subject('Tarea');            
+
+            $crud->field_type('estado','dropdown',
+            array('1' => 'Detenido','2' => 'Ejecutando','3' => 'Terminado'));
+
             $crud->columns('orden','cliente','vehiculo','patente','mecanico','asesor','text','duration','estado');
             
             $crud->set_relation('mecanico','members','{id}');
@@ -65,15 +76,66 @@ class Tarea extends CI_Controller {
             $crud->add_fields('mecanico','orden','asesor','cliente','patente','vehiculo','text','start_date','duration','estado');
             $crud->edit_fields(array('mecanico','orden','asesor','cliente','patente','vehiculo','text','start_date','duration','estado'));
 
-            $output = $crud->render();
+            $output1 = $crud->render();
 
-            $this->_example_output($output);
+            $this->_example_output1($output1);
 
         }catch(Exception $e){
             show_error($e->getMessage().' --- '.$e->getTraceAsString());
         }
     }
 
+        public function tareaterminada()
+    {
+        try{
+            $crud = new grocery_CRUD();
+
+            $crud->set_theme('datatables');
+      
+            //$crud->display_as('id','Mecanico')
+            $where = "estado='3'";
+
+            $crud->where ($where);
+
+            $crud->set_table('gantt_tasks');
+                        
+            //$crud->set_relation('customerNumber','customers','{contactLastName} {contactFirstName}');
+
+            $crud->display_as('text','Descripcion')
+                 ->display_as('orden','Numero de Orden')
+                 //->display_as('asesor','Asesor de Servicio')
+                 ->display_as('start_date','Comienzo')
+                 ->display_as('progress','Descripcion')
+                 ->display_as('duration','Duracion Horas')
+                 ->display_as('text','Descripcion');
+            
+            $crud->set_subject('Tarea');            
+
+            $crud->field_type('estado','dropdown',
+            array('1' => 'Detenido','2' => 'Ejecutando','3' => 'Terminado'));
+
+            $crud->columns('orden','cliente','vehiculo','patente','mecanico','asesor','text','duration','estado');
+            
+            $crud->set_relation('mecanico','members','{id}');
+            //$crud->set_relation('asesor','asesores','{apellido} {nombre}');
+
+            $crud->required_fields('orden');
+            $crud->required_fields('cliente');
+            //$crud->required_fields('patente');
+            $crud->required_fields('vehiculo');
+            $crud->required_fields('text');
+
+            $crud->add_fields('mecanico','orden','asesor','cliente','patente','vehiculo','text','start_date','duration','estado');
+            $crud->edit_fields(array('mecanico','orden','asesor','cliente','patente','vehiculo','text','start_date','duration','estado'));
+
+            $output2 = $crud->render();
+
+            $this->_example_output2($output2);
+
+        }catch(Exception $e){
+            show_error($e->getMessage().' --- '.$e->getTraceAsString());
+        }
+    }
 
     function empleados_management()
     {

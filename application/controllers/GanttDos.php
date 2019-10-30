@@ -10,6 +10,13 @@ class GanttDos extends CI_Controller {
         $this->load->view("GanttViewDos");
     }
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->database();
+        $this->load->helper('url');
+    }
+
     public function data() {
         $this->load->database();
 

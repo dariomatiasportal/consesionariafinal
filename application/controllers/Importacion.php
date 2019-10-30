@@ -57,42 +57,28 @@ class Importacion extends CI_Controller {
 
                 //Numero de Hojas en el Archivo
                 foreach ($reader->getSheetIterator() as $sheet) {
-
                     // Numero de filas en el documento EXCEL
                     foreach ($sheet->getRowIterator() as $row) {
-
                         // Lee los Datos despues del encabezado
                         // El encabezado se encuentra en la primera fila
                         if ($count > 1) {
-
-
                             $data = array(
-                                //rut_usu, fecha_ini, y fecha_ter son imputs del formulario
                                 //no se encuentran en el archivo EXCEL
                                 //los estoy capturando por POST
                                 //'rut_usu' => $this->input->post('rut_usu'),
-                                'orden' => $row[0],
+                                'orden' => $row[0],//No va
                                 'cliente' => $row[1],                                
                                 'vehiculo' => $row[2],
                                 'patente' => $row[3],
                                 'asesor' => $row[4],
                                 'text' => $row[5],                                
-                                    //'' => $row[4]
-                                    //'jueves' => $row[5],
-                                    //'viernes' => $row[6],
-                                    //'sabado' => $row[7],
-                                    //'fecha_ini' => $this->input->post('fecha_ini'),
-                                    //'fecha_ter' => $this->input->post('fecha_ter')
                             );
-
-
-                            $this->db->insert('gantt_tasks', $data);
-                                
+                            $this->db->insert('gantt_tasks', $data);                                
                         }
                         $count++;
                     }
                     echo "<script>alert('Archivo fue importado exitosamente.');</script>";
-                                redirect('tarea', 'refresh');
+                                redirect('tarea/tarealist', 'refresh');
                 }
 
                 // cerramos el archivo EXCEL

@@ -1,23 +1,29 @@
-<!DOCTYPE html>
-<html>
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?><!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tareas -Autosol</title>
+  <meta charset="utf-8">
 
-    <?php 
-        foreach($css_files as $file): ?>
-        <link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
-    <?php endforeach; ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/bootstrap/css/bootstrap.min.css')?>'>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/datatables/dataTables.bootstrap.min.css">
-<script src="<?php echo base_url(); ?>static/lib/dhtmlxGantt/samples/common/third-party/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="<?php echo base_url(); ?>static/lib/dhtmlxGantt/samples/common/third-party/jquery-1.11.1.min.js" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" href="<?php echo base_url(); ?>static/lib/dhtmlxGantt/samples/common/third-party/bootstrap/3.2.0/css/bootstrap.min.css">  
-<script src="<?php echo base_url(); ?>static/lib/dhtmlxGantt/samples/common/third-party/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <title>Tareas Terminadas-Autosol</title>
+  <!-- bootstrap -->
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url().'assets/bootstrap/css/bootstrap.min.css'?>">
+  <!-- datatables css -->
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url().'assets/datatables/datatables.min.css'?>">
+	<script src="<?php echo base_url().'static/lib/dhtmlxGantt/codebase/dhtmlxgantt.js'?>" type="text/javascript" charset="utf-8"></script>
+	<?php 
+	foreach($css_files as $file): ?>
+	    <link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
+	    
+	<?php endforeach; ?>
+	<?php foreach($js_files as $file): ?>
+	    <script src="<?php echo $file; ?>"></script>
+	    
+	<?php endforeach; ?>
 </head>
-<body>
-    <div class="container-fluid">
+    <body>
+      <div class="container-fluid">
+
         <div class="row">
             <div class="col-md-12">
                 <div class="navbar navbar-inverse">
@@ -57,28 +63,12 @@
         </div>
         <div class="container">
             <div class="page-header">
-                <center><h1>Gestion de Tareas - <small>Taller Autosol</small></h1></center>
+                <center><h1>Tareas Terminadas  - <small>Taller Autosol</small></h1></center>
             </div>
         </div>
-        <div style="padding: 10px">
+        <div>
             <?php echo $output; ?>
         </div>
-        <?php foreach($js_files as $file): ?>
-            <script src="<?php echo $file; ?>"></script>
-        <?php endforeach; ?>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="well">
-                    <div>
-                        <a class="logo" title="DHTMLX - JavaScript Web App Framework &amp; UI Widgets" href="http://dhtmlx.com/docs/products/dhtmlxGantt/">&copy; DHTMLX</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-   
-    
-
-
-</body>
+      </div>
+  </body>
 </html>

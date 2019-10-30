@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="./static/lib/dhtmlxGantt/samples/common/third-party/bootstrap/3.2.0/css/   ">
 <script src="./static/lib/dhtmlxGantt/samples/common/third-party/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-
 <!--Color de Gantt -->
 <script src="./static/lib/dhtmlxGantt/codebase/ext/dhtmlxgantt_quick_info.js" type="text/javascript" charset="utf-8"></script><!--Ventana emergente de Tarea -->
 <script type="text/javascript" src="./static/lib/dhtmlxGantt/samples/common/testdata.js"></script>
@@ -124,10 +123,9 @@
       font-weight:bold;
     }
 </style>
-
 </head>
 <body>
-     <div class="container-fluid">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <div class="navbar navbar-inverse">
@@ -165,83 +163,60 @@
                 </div>
             </div>
         </div>
-        <div class="row">            
-            <div class="col-md-2 col-md-push-10">
-            <div class="panel panel-default">                
-                <div class="panel-heading">
-                    <h3 class="panel-title">Ordenar Gantt<br>por Mecanico</h3>
-                </div>
-                <div class="panel-body">
-                    <input type='button'  value='Ordenar A-Z' onclick='sortByNameMecanico()'>
-                </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="gantt_wrapper panel" id="gantt_here"></div>
             </div>
-            <div class="panel panel-default">                
-                <div class="panel-heading">
-                    <h3 class="panel-title">Ordenar Gantt<br>por Cliente</h3>
-                </div>
-                <div class="panel-body">
-                    <input type='button'  value='Ordenar A-Z' onclick='sortByNameCliente()'>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-10 col-md-pull-2">
-            <div class="gantt_wrapper panel" id="gantt_here"></div>
-        </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="well">
                     <div>
-                        <a class="logo" title="AUTOSOL - Sistema de Gestion de Taller" href="">&copy; AUTOSOL - Sistema de Gestion de Taller</a>
+                        <a class="logo" title="DHTMLX - JavaScript Web App Framework &amp; UI Widgets" href="http://dhtmlx.com/docs/products/dhtmlxGantt/">&copy; DHTMLX</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
     <!-- <div id="gantt_here" style='width:100%; height:100%;'></div> !-->
-<script type="text/javascript">
-    fec = new Date();
-    dia = fec.getDate();
-    mes = fec.getMonth();
-    anio = fec.getFullYear();
-    hora = fec.getHours();
-    min = fec.getMinutes();
 
-    //---Linea de Hora
-    var date_to_str = gantt.date.date_to_str(gantt.config.task_date);
-    var today = new Date(anio, mes, dia, hora, min);
+    <script type="text/javascript">
 
-    var start = new Date(anio, mes, dia, hora, min);
-    gantt.addMarker({
-        start_date: start,
-        css: "status_line",
-        text: "Hora del día",
-        title: "Start project: " + date_to_str(start)
-    });
+        fec = new Date();
+        dia = fec.getDate();
+        if (dia < 10)
+            dia = '0' + dia;
+        mes = fec.getMonth();
+        if (mes < 10)
+            mes = '0' + mes;
+        anio = fec.getFullYear();
+        hora = fec.getHours();
+        min = fec.getMinutes();
 
-    //---Botones Orden
-    var p_direction = false;
-    var n_direction = false;
-    function sortByNameMecanico(){
-        if (n_direction){
-            gantt.sort("mecanico",false);
-        } else {
-            gantt.sort("mecanico",true);
-        }
-        n_direction = !n_direction;
-    };
+        fecha = dia + '/' + mes + '/' + anio;
 
-    function sortByNameCliente(){
-        if (n_direction){
-            gantt.sort("cliente",false);
-        } else {
-            gantt.sort("cliente",true);
-        }
-        n_direction = !n_direction;
-    };
-  
+        gantt.templates.progress_text = function (start, end, task) {
+            return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
+        };
 
+        //------------------Linea de Hora
+        var date_to_str = gantt.date.date_to_str(gantt.config.task_date);
+        var today = new Date(anio, mes, dia, hora, min);
+
+        var start = new Date(anio, mes, dia, hora, min);
+        gantt.addMarker({
+            start_date: start,
+            css: "status_line",
+            text: "Hora del día",
+            title: "Start project: " + date_to_str(start)
+        });
+
+
+
+//https://docs.dhtmlx.com/gantt/desktop__date_format.html
     gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
     gantt.config.step = 1;
     gantt.config.scale_unit = "hour";
@@ -250,25 +225,41 @@
     gantt.config.duration_unit = "minute";
     gantt.config.duration_step = 60;
     gantt.config.scale_height = 75;
-    //gantt.config.editable_property = "mecanico";
-    gantt.config.readonly = true;
+    //gantt.config.readonly = true;
 
     gantt.config.subscales = [
-        {unit: "day", step: 1, date: "%j %F, %l"},
+        {unit: "day", step: 1, date: "%l %j de %F"},
         {unit: "minute", step: 30, date: "%i"}
     ];
 
     gantt.config.columns = [
         {name: "cliente", label: "Cliente", width: "*", tree: true},
         {name: "vehiculo", label: "Vehiculo", align: "center"},
-        //{name:"orden",   label:"Orden",   align: "center"},
-        {name: "orden", label:"N°Orden", align: "center", width : '50'},
-        {name:"mecanico", label:"Mecanico",   align: "center"}
-        //{name: "text", label: "Detalle", align: "center"},                
+        {name:"orden", label:"Orden",   align: "center"},
+        //  {name:"mecanico", label:"Mecanico", align: "center", width : '70'},
+        {name:"estado", label:"Estado", align: "center", width : '*',template: function (obj) {
+            if (obj.estado=="1") return "Detenido";
+            if (obj.estado=="2") return "Ejecutando";
+            return "Terminado";
+        }}
     ];
 
+        //Color Barras Gantt
+//        gantt.templates.task_class  = function(start, end, task){
+        //switch (task.estado){
+//            case "Terminado":
+////////                return "Terminado";
+//////                break;
+//////            case "Ejecutando":
+////                return "Ejecutando";
+////                break;
+//            case "Detenido":
+//                return "Detenido";
+//                break;
+//            }
+//        };
 
-    gantt.locale.labels.section_template = "Details";
+gantt.locale.labels.section_template = "Details";
     //https://docs.dhtmlx.com/gantt/desktop__lightbox_templates.html
     gantt.config.lightbox.sections = [
         {name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
@@ -286,31 +277,24 @@
     return true;
     });
 
-    //https://docs.dhtmlx.com/gantt/desktop__tooltips.html
-    gantt.templates.tooltip_text = function(start,end,task){
-        return "<b>Fecha:</b> "+task.start_date+"<br/><b>Tarea:</b> " + task.text+"<br/><b>Mecanico:</b> " + task.mecanico+"<br/><b>Cliente:</b> " + task.cliente;
-    };
-    
     //Lightbox Titulo
-    //gantt.templates.quick_info_title = function(start, end, task){ 
-       //return task.my_template = "<span id='title1'>Mecanico: </span>"+ task.mecanico;
-       //return task.my_template = "<span id='title1'>Detalle de Tarea</span>";
-    //};
-    //gantt.templates.quick_info_date = function(start, end, task){
+    gantt.templates.quick_info_title = function(start, end, task){ 
+       return task.my_template = "<span id='title1'>Asesor: </span>"+ task.asesor;
+    };
+    gantt.templates.quick_info_date = function(start, end, task){
+        return null;
         //return gantt.templates.task_time(start, end, task);
-    //};
+    };
     //Lightbox Cuerpo
-    //gantt.templates.quick_info_content = function(start, end, task){ 
-       //return task.my_template = "<span id='title1'>Descripción: </span>"+ task.text;
-       //return task.my_template = "<span id='title1'>Asesor: </span>"+ task.asesor+" <br><span id='title2'>Descripción: </span>"+ task.text +" <br>";
-    //};
+    gantt.templates.quick_info_content = function(start, end, task){ 
+       return task.my_template = "<span id='title1'>Descripción: </span>"+ task.text;
+    };
 
     gantt.init("gantt_here", new Date(anio, mes, dia,8), new Date(anio, mes, dia,21));
-    gantt.load("./ganttuno/data", "xml");
+    gantt.load("./gantt/data", "xml");
 
-    var dp = new dataProcessor("./ganttuno/data");
+    var dp = new dataProcessor("./gantt/data");
     dp.init(gantt);
 
 </script>
-
 </body>

@@ -180,10 +180,10 @@
                         }, ],
 
                     "rowCallback": function (row, data, dataIndex) {
-                        if (data[6] == "Terminado") {
+                        if (data[6] == "3") {
                             $(row).css('background-color', '#6ba8e3');
                         } else {
-                            if (data[6] == "Detenido") {
+                            if (data[6] == "2") {
                             $(row).css('background-color', '#d96c49');
                         } else {
                             $(row).css('background-color', '#34c461');

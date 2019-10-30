@@ -214,5 +214,5 @@ gantt._fill_quick_data  = function(id){
 
 //main content
 	var main = qi.firstChild.nextSibling;
-	main.innerHTML = gantt.templates.quick_info_content(ev.start_date, ev.end_date, ev);
+	main.innerHTML = gantt.templates.quick_info_content(ev.start_date, ev);
 };

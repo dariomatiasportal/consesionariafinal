@@ -9123,9 +9123,10 @@ gantt._init_templates = function(){
             return "<div class='gantt_tree_icon gantt_blank'></div>";
         },
 
-
+        //Aqui modifique
         task_time:function(start,end,ev){
-            return gantt.templates.task_date(start)+" - "+gantt.templates.task_date(end);
+            //return gantt.templates.task_date(start)+" - "+gantt.templates.task_date(end);
+            return gantt.templates.task_date(start)
         },
         time_picker:d(c.time_picker),
 		link_class : function(link){

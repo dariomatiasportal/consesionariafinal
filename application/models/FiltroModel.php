@@ -80,7 +80,8 @@ class FiltroModel extends CI_Model {
     public function get_list_countries() {
         $this->db->select('estado');
         $this->db->from($this->table);
-        $this->db->order_by('estado', 'asc');
+        $this->db->where('start_date', '2019-09-03 13:00:00');
+        //$this->db->order_by('estado', 'asc');
         $query = $this->db->get();
         $result = $query->result();
 
@@ -93,12 +94,12 @@ class FiltroModel extends CI_Model {
 
     public function fetchMemberData($id = null) {
         if ($id) {
-            $sql = "SELECT * FROM gantt_tasks WHERE id = ?";
+            $sql = "SELECT * FROM gantt_tasks WHERE id = ? AND start_date = CURDATE()";
             $query = $this->db->query($sql, array($id));
             return $query->row_array();
         }
 
-        $sql = "SELECT * FROM gantt_tasks";
+        $sql = "SELECT * FROM gantt_tasks WHERE start_date = CURDATE()";
         $query = $this->db->query($sql);
         return $query->result_array();
     }
